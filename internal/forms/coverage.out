@@ -1,0 +1,16 @@
+mode: set
+github.com/bhehar/bed-and-breakfast/internal/forms/errors.go:6.40,8.2 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/errors.go:11.47,13.18 2 1
+github.com/bhehar/bed-and-breakfast/internal/forms/errors.go:13.18,15.3 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/errors.go:16.2,16.14 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:20.33,25.2 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:27.29,29.2 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:32.43,33.31 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:33.31,35.35 2 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:35.35,37.4 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:41.39,43.2 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:46.54,48.22 2 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:48.22,52.3 3 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:53.2,53.13 1 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:57.32,59.17 2 1
+github.com/bhehar/bed-and-breakfast/internal/forms/forms.go:59.17,61.3 1 1
