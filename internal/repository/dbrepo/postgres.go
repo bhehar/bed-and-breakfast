@@ -11,6 +11,27 @@ func (m *postgresDBRepo) AllUsers() bool {
 	return true
 }
 
+func (m *postgresDBRepo) GetRoomById(id int) (models.Room, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	stmt := `
+		SELECT
+			id,
+			room_name
+		FROM
+			rooms
+		WHERE
+			id = $1`
+
+	var room models.Room
+	err := m.DB.QueryRowContext(ctx, stmt, id).Scan(&room.ID, &room.RoomName)
+	if err != nil {
+		return room, err
+	}
+	return room, nil
+}
+
 // InsertReservation inserts a reservation into the database
 func (m *postgresDBRepo) InsertReservation(res models.Reservation) (int, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)

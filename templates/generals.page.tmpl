@@ -31,10 +31,10 @@
                         <div class="col">
                             <div class="form-row" id="reservation-dates-modal">
                                 <div class="col">
-                                    <input disabled required class="form-control" type="text" name="start" id="start" placeholder="Arrival">
+                                    <input disabled required class="form-control" type="text" name="start_date" id="startDate" placeholder="Arrival">
                                 </div>
                                 <div class="col">
-                                    <input disabled required class="form-control" type="text" name="end" id="end" placeholder="Departure">
+                                    <input disabled required class="form-control" type="text" name="end_date" id="endDate" placeholder="Departure">
                                 </div>
 
                             </div>
@@ -46,39 +46,63 @@
             title: 'Choose your dates',
             msg: html,
             willOpen: () => {
-                        const elem = document.getElementById("reservation-dates-modal");
-                        const rp = new DateRangePicker(elem, {
-                            format: 'yyyy-mm-dd',
-                            showOnFocus: true,
-                        })
-                    },
+                const minResDate = new Date()
+                minResDate.setDate(minResDate.getDate() + 1)
+                const elem = document.getElementById("reservation-dates-modal");
+                const rp = new DateRangePicker(elem, {
+                    format: 'yyyy-mm-dd',
+                    showOnFocus: true,
+                    minDate: minResDate,
+                })
+            },
             didOpen: () => {
-                        document.getElementById("start").removeAttribute("disabled");
-                        document.getElementById("end").removeAttribute("disabled");
-                    },        
-            callback: function(result) {
+                document.getElementById("startDate").removeAttribute("disabled");
+                document.getElementById("endDate").removeAttribute("disabled");
+            },
+            callback: function (result) {
                 console.log("result:", result)
 
                 const form = document.getElementById("check-availability-form");
                 const formData = new FormData(form);
                 formData.set("csrf_token", "{{.CSRFToken}}");
-    
+                formData.set("room_id", "1");
+
                 if (result !== false) {
                     fetch("/search-availability-json", {
                         method: "post",
                         body: formData,
                     })
-                    .then(resp => resp.json())
-                    .then(data => {
-                        console.log(data.ok);
-                        console.log(data.message);
-                    })
+                        .then(resp => resp.json())
+                        .then(data => {
+                            if (data.ok) {
+                                roomAvailable(data);
+                            }
+                            else {
+                                attention.error({
+                                    msg: "No Availability"
+                                });
+                            }
+                        })
                 }
             }
         });
     })
 
-    
+    function roomAvailable(data) {
+        bookUrl = "/book-room?id=" + data.room_id
+        + "&startDate=" + data.start_date
+        + "&endDate=" + data.end_date;
+        attention.custom({
+            icon: 'success',
+            showConfirmBtn: false,
+            msg: '<p>Room is available</p>'
+                + '<p>'
+                + '<a href="' + bookUrl
+                + '"class="btn btn-primary">Book Now!</a>'
+                + '</p>'
+        });
+    }
+
 
 </script>
 

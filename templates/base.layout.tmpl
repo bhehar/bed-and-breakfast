@@ -76,6 +76,7 @@
     <script src="https://unpkg.com/notie"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.2/dist/js/datepicker-full.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./../static/js/app.js"></script>
 
     {{block "js" .}}
     {{end}}
@@ -104,108 +105,6 @@
                 type: alertType,
                 text: msg,
             })
-        }
-
-        function Prompt() {
-            let toast = function (c) {
-                const {
-                    title = "",
-                    icon = "success",
-                    position = "top-end"
-                } = c;
-
-                const Toast = Swal.mixin({
-                    toast: true,
-                    title: title,
-                    position: position,
-                    icon: icon,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                })
-
-                Toast.fire({})
-            }
-
-            let success = function (c) {
-                const {
-                    text = "",
-                    title = "",
-                } = c;
-                Swal.fire({
-                    title: title,
-                    text: text,
-                    icon: "success",
-                });
-            }
-
-            let error = function (c) {
-                const {
-                    text = "",
-                    title = "",
-                } = c;
-                Swal.fire({
-                    title: title,
-                    text: text,
-                    icon: "error",
-                });
-            }
-
-            async function custom(c) {
-                const {
-                    msg = "",
-                    title = "",
-                } = c;
-
-                const result = await Swal.fire({
-                    // const obj = await Swal.fire({
-                    title: title,
-                    html: msg,
-                    backdrop: false,
-                    focusConfirm: false,
-                    showCancelButton: true,
-                    willOpen: () => {
-                        if (c.willOpen !== undefined) {
-                            c.willOpen();
-                        }
-                    },
-                    didOpen: () => {
-                        if (c.didOpen !== undefined) {
-                            c.didOpen();
-                        }
-                    },
-                    preConfirm: () => {
-                        return [
-                            document.getElementById('start').value,
-                            document.getElementById('end').value
-                        ]
-                    }
-                })
-                if (result) {
-                    if (result.dismiss !== Swal.DismissReason.cancel) {
-                        if (result.value[0] !== "" && result.value[1] !== "") {
-                            if (c.callback !== undefined) {
-                                c.callback(result);
-                            }
-                        } else {
-                            c.callback(false);
-                        }
-                    } else {
-                        c.callback(false);
-                    }
-                }
-            }
-
-            return {
-                toast: toast,
-                success: success,
-                error: error,
-                custom: custom,
-            }
         }
     </script>
     
