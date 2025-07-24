@@ -54,10 +54,11 @@ func getRoutes() http.Handler {
 	app.TemplateCache = tc
 	app.UseCache = true
 
-	repo := NewRepo(&app)
+	// database
+	repo := NewRepo(&app, nil)
 	NewHandlers(repo)
 	// pass into render package
-	render.NewTemplates(&app)
+	render.NewRenderer(&app)
 
 	mux := chi.NewRouter()
 

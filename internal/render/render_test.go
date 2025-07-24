@@ -22,7 +22,7 @@ func TestAddDefaultData(t *testing.T) {
 	}
 }
 
-func TestRenderTemplate(t *testing.T) {
+func TestTemplate(t *testing.T) {
 	pathToPages   = "./../../templates/*.page.tmpl"
 	pathToLayouts = "./../../templates/*.layout.tmpl"
 	tc, err := CreateTemplateCache()
@@ -39,11 +39,11 @@ func TestRenderTemplate(t *testing.T) {
 
 	var ww = myWriter{}
 
-	err = RenderTemplate(&ww, r, "home.page.tmpl", &models.TemplateData{})
+	err = Template(&ww, r, "home.page.tmpl", &models.TemplateData{})
 	if err != nil {
 		t.Errorf("error writing template to browser. details: %v", err)
 	}
-	err = RenderTemplate(&ww, r, "non-existent.page.tmpl", &models.TemplateData{})
+	err = Template(&ww, r, "non-existent.page.tmpl", &models.TemplateData{})
 	if err == nil {
 		t.Error("did not get an error for non-existent template")
 	}
