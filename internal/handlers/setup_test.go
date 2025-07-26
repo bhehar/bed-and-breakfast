@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"testing"
 	"time"
 
 	"github.com/alexedwards/scs/v2"
@@ -26,7 +27,7 @@ const (
 	pathToLayouts = "./../../templates/*.layout.tmpl"
 )
 
-func getRoutes() http.Handler {
+func TestMain(m *testing.M) {
 	// what am I going to put in the session
 	gob.Register(models.Reservation{})
 
@@ -55,10 +56,15 @@ func getRoutes() http.Handler {
 	app.UseCache = true
 
 	// database
-	repo := NewRepo(&app, nil)
+	repo := NewTestingRepo(&app)
 	NewHandlers(repo)
 	// pass into render package
 	render.NewRenderer(&app)
+	os.Exit(m.Run())
+}
+
+func getRoutes() http.Handler {
+
 
 	mux := chi.NewRouter()
 
